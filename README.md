@@ -1,4 +1,4 @@
-# Hellyeah · Onboarding moderation (PM take-home)
+# Hellyeah · Onboarding moderation (PM interview)
 
 You are the product manager for onboarding at Hellyeah. This is a slice of the
 real codebase: brand tokens, a few UI primitives, the rule that decides whether
