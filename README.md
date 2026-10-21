@@ -12,6 +12,8 @@ Budget about **four hours**, spread over up to five days. Use whatever tools you
 normally use, including AI coding assistants. We will ask to see how you used
 them.
 
+And in today's interview, we'd discuss how you dissect these questions and brainstorm solutions. 
+
 ## Setup
 
 Node 20 or newer.
