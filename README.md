@@ -24,6 +24,63 @@ npm run dev        # http://localhost:5173
 npm test           # baseline tests, keep them green
 ```
 
+## Background
+
+**What Hellyeah does.** Hellyeah runs Google Ads for small businesses that have
+no marketing team. A dentist or a furniture shop signs up, tells us about their
+business, tops up a wallet, and we plan, create and launch their campaigns.
+Every customer's campaigns run under one Google Ads manager account that we
+own, called the MCC.
+
+**Why we check businesses before they spend.** Google does not allow ads for
+certain categories: gambling, adult content, weapons, alcohol, tobacco,
+cannabis, crypto trading, payday loans, illegal activity. When Google
+disapproves a campaign for one of these, the mark goes against our MCC, not
+just that customer. Two disapprovals in the same category within 90 days
+trigger an account-level strike, which pauses every customer's campaigns for
+up to 72 hours while we appeal. One bad customer can take down all of them.
+
+**How the check works today.** When a business submits its profile, a rule
+reads the name, website and description and returns one of three verdicts. It
+is deterministic, keyword-based, and has no LLM in it.
+
+| Verdict | Meaning | What happens |
+| --- | --- | --- |
+| `allow` | No risk signals | Onboarding continues, nobody looks |
+| `review` | An ambiguous word such as "trading", "exchange", "broker" or "desk" | Lands in a queue for the customer success (CS) team |
+| `block` | An explicit match such as "sportsbook" or "payday loans" | Denied with a message, nobody looks |
+
+Businesses that already finished onboarding before the rule existed are
+allowed through regardless.
+
+**The queue.** The CS team sees the review queue as a JSON dump on an internal
+page. They look up each business by hand, decide in Slack, and nothing is
+recorded. If the same business comes back a week later, someone reviews it
+again.
+
+**What went wrong recently.**
+
+- Three weeks ago a short-term lender called Loan in a Flash came through as
+  `allow`. The rule looks for the word "payday" and they never used it. Google
+  disapproved their campaign. That is one disapproval on the MCC in the
+  lending category. A second one would be a strike.
+- Last week a barbecue restaurant called Stake House BBQ was hard-blocked
+  because "stake" is on the list of gambling brands. They emailed to ask why.
+- The review queue has 31 open items. The oldest has been waiting since last
+  Wednesday. CS says most of what they review turns out to be fine.
+
+**The people.**
+
+- **Priya Nair**, CS lead. Her team works the queue and talks to the customers
+  who get blocked.
+- **Daniel Okafor**, Head of Risk. Owns the Google policy relationship and the
+  appeal if a strike happens.
+- **Marco**, founder.
+
+**You.** The PM for onboarding. Marco has asked you what we should actually
+do. You have the thread, one page of notes from Priya, one page from Daniel, a
+30-day export of the queue, and the codebase.
+
 ## The situation
 
 Last week the CS lead posted in `#onboarding` that the review queue is "eating
